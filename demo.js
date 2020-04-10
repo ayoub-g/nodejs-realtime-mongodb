@@ -16,6 +16,7 @@ demo = async () => {
           operationType: "update",
         },
       },
+      { $project: { "fullDocument.note": 0 } },
     ]);
 
     while (await cursor.hasNext()) {
