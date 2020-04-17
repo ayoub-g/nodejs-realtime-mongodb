@@ -1,6 +1,7 @@
 const { MongoClient } = require("mongodb");
 class Common {
   static async connect() {
+    // how to choose the replica set
     return await MongoClient.connect("mongodb://localhost/?replSet=R1");
   }
   static async getCollection(collectionName) {
