@@ -1,9 +1,8 @@
 const common = require("./common");
 const Consumer = require("./consumer");
-const compain = new Consumer("campain");
 const analytics = new Consumer("analytics", true);
 const CartStatus = require("./cartStatus");
-demo = async () => {
+watchCart = async () => {
   try {
     const collection = await common.getCollection("cart");
     const options = { fullDocument: "updateLookup" };
@@ -21,4 +20,4 @@ demo = async () => {
     console.log(err.stack);
   }
 };
-demo();
+module.exports = watchCart;
