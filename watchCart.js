@@ -4,7 +4,7 @@ const analytics = new Consumer("analytics", true);
 const CartStatus = require("./cartStatus");
 watchCart = async () => {
   try {
-    const collection = await common.getCollection("cart");
+    const collection = await common.getCollection("booking");
     const options = { fullDocument: "updateLookup" };
     const pipeline = [{ $match: { "fullDocument.status": CartStatus.SHOP } }];
     const changeSteam = collection.watch(pipeline, options);
