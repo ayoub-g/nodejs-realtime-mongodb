@@ -7,7 +7,7 @@ const { map, switchMap } = require("rxjs/operators");
 const port = 3000;
 const io = require("socket.io");
 
-const io$ = fromEvent(io(server));
+const io$ = of(io(server));
 
 //io.on("connection", () => console.log("user connected"));
 
