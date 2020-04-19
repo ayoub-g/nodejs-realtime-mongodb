@@ -1,5 +1,6 @@
 const express = require("express");
-const watchCart = require("./watchCart");
+const WatchBooking = require("./watchBooking");
+const Consumer = require("./consumer");
 const bookingEvents = require("./bookingEvents");
 const app = express();
 const server = require("http").createServer(app);
@@ -9,7 +10,8 @@ const port = 3000;
 
 const io = require("socket.io");
 const io$ = of(io(server));
-
+let watchBookingMap = new Map();
+const consumer = new Consumer("analytics", true);
 // Stream of connections
 const connections$ = io$.pipe(
   switchMap((io) =>
@@ -38,8 +40,14 @@ disconnection$.subscribe(({ client }) => {
 
 watchers$.subscribe((client) => {
   const data = JSON.parse(client.payload);
-  console.log("watching ", data.consultantId);
-  // watchCart();
+  console.log("watching... ", data.consultantId);
+  if (watchBookingMap.get(data.consultantId) === undefined) {
+    var watchBooking = new WatchBooking(data.consultantId);
+
+    watchBooking.initConsumer(consumer);
+    watchBooking.watch();
+    watchBookingMap.set(data.consultantId, watchBooking);
+  }
 });
 //start server
 server.listen(port);

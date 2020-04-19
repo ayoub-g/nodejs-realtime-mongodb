@@ -1,11 +1,10 @@
 const { MongoClient } = require("mongodb");
 class Common {
-  static async connect(db) {
-    // how to choose the replica set
-    this.db = db;
+  static async connect() {
+    // how to choose the replica set ? how to get the right adress
     return await MongoClient.connect("mongodb://localhost/?replSet=R1");
   }
-  static async getCollection(collectionName) {
+  static async getCollection(db, collectionName) {
     const client = await Common.connect();
     return client.db(db).collection(collectionName);
   }
